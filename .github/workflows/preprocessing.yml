@@ -1,0 +1,41 @@
+name: Preprocessing Dataset & Split
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'preprocessing/**'
+      - 'titanic_raw/**'
+      - 'automate_preprocessing.py'
+  workflow_dispatch:
+
+jobs:
+  preprocessing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          pip install pandas scikit-learn
+
+      - name: Jalankan Preprocessing dan Split
+        run: |
+          python automate_preprocessing.py \
+            --input titanic_raw/titanic_data.csv \
+            --output-dir preprocessing
+
+      - name: Upload Artefak Train/Test
+        uses: actions/upload-artifact@v3
+        with:
+          name: dataset-split
+          path: |
+            preprocessing/train.csv
+            preprocessing/test.csv
