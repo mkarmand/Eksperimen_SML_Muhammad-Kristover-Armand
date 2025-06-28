@@ -25,7 +25,7 @@ jobs:
 
       - name: Run preprocessing script
         run: |
-          python preprocessing/automate_preprocessing.py --input preprocessing/raw_data.csv --output-dir preprocessing
+          python preprocessing/automate_muhammad-kristover-armand.py --input preprocessing/raw_data.csv --output-dir preprocessing
 
       - name: Upload preprocessed data as artifact
         uses: actions/upload-artifact@v4
